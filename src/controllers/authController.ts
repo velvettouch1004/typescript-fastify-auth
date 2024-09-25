@@ -25,9 +25,8 @@ export const loginUser = async (req: FastifyRequest, res: FastifyReply) => {
 };
 
 export const registerUser = async (req: FastifyRequest, res: FastifyReply) => {
-  const { firstName, lastName, email, password } = req.body as {
-    firstName: string;
-    lastName: string;
+  const { name, email, password } = req.body as {
+    name: string;
     email: string;
     password: string;
   };
@@ -42,8 +41,8 @@ export const registerUser = async (req: FastifyRequest, res: FastifyReply) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = {
-    firstName,
-    lastName,
+    
+    name,
     email,
     password: hashedPassword,
   };
