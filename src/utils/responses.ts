@@ -1,0 +1,9 @@
+export const INVALID_INPUTS = "invalid_inputs";
+export const INTERNAL_SERVER_ERROR = "internal_server_error";
+export const SUCCESS = "success";
+export const SUCCESS_SIGNUP = "success_signup";
+export const EMAIL_OR_PASSWORD_IS_INCORRECT = "email_or_password_is_incorrect";
+export const UNAUTHORIZED = "unauthorized";
+export const NOT_FOUND = "not_found";
+export const DUPLICATED_EMAIL = "duplicated_email";
+export const USER_NOT_FOUND = "user_not_found";

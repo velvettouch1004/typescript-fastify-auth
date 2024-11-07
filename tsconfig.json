@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "strict": true,
     "moduleResolution": "node",
-    "target": "ESNext",
+    "target": "ES2020",
     "module": "CommonJS",
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "resolveJsonModule": true,
+    "outDir": "./build",
+    "lib": ["es2020", "dom"]
   },
-  "typeRoots": ["./node_modules/@types", "./src/types"],
-  "include": ["src/**/*.ts", "fastify.d.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }

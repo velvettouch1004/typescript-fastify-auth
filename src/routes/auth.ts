@@ -1,20 +1,16 @@
-// src/routes/authRoutes.ts
 import { FastifyInstance } from "fastify";
 import {
   loginUser,
   registerUser,
-  getProfile,
+  refreshUser,
+  signout,
 } from "../controllers/authController";
 
 async function authRoutes(fastify: FastifyInstance) {
-  // Login route
   fastify.post("/login", loginUser);
-
-  // Register route
-  fastify.post("/register", registerUser);
-
-  // Protected profile route
-  fastify.get("/", getProfile);
+  fastify.post("/signup", registerUser);
+  fastify.post("/refresh", refreshUser);
+  fastify.post("/signout", signout);
 }
 
 export default authRoutes;
