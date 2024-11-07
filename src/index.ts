@@ -7,10 +7,7 @@ import { connectToDatabase } from "./config/db";
 import passport from "./config/passport";
 import authRoutes from "./routes/auth";
 import userRoute from "./routes/user";
-import courseRouter from "./routes/course";
 dotenv.config();
-
-const allowedOrigins = process.env.CORS_ORIGIN.split(",");
 
 const server = Fastify();
 
@@ -19,38 +16,30 @@ server.register(fastifyMultipart);
 server.register(passport);
 server.register(fastifyCookie);
 
-// Manage CORS
+// Manage CORS for all requests
 server.options("*", (req: FastifyRequest, res: FastifyReply) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res
-      .header("access-control-allow-origin", origin)
-      .header("access-control-allow-methods", "POST, GET, DELETE, PUT, OPTIONS")
-      .header("access-control-allow-headers", "Content-Type, Authorization")
-      .header("access-control-allow-credentials", "true")
-      .status(204)
-      .send();
-  } else {
-    res.code(403).send({ error: "CORS policy does not allow this" });
-  }
+  res
+    .header("Access-Control-Allow-Origin", "*")  // Allow any origin
+    .header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
+    .header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+    .header("Access-Control-Allow-Credentials", "true")
+    .status(204)
+    .send();
 });
 
+// Add a hook to manage CORS headers for other requests
 server.addHook("onSend", (request, reply, _, done) => {
-  const origin = request.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    reply
-      .header("Access-Control-Allow-Origin", origin)
-      .header("Access-Control-Allow-Credentials", "true")
-      .header("access-control-allow-methods", "POST, GET, DELETE, PUT, OPTIONS")
-      .header("access-control-allow-headers", "Content-Type, Authorization");
-  }
+  reply
+    .header("Access-Control-Allow-Origin", "*")  // Allow any origin
+    .header("Access-Control-Allow-Credentials", "true")
+    .header("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS")
+    .header("Access-Control-Allow-Headers", "Content-Type, Authorization");
   done();
 });
 
 // Register routes
 server.register(authRoutes, { prefix: "/auth" });
 server.register(userRoute, { prefix: "/user" });
-server.register(courseRouter, { prefix: "/course" });
 
 const PORT = Number(process.env.PORT);
 const HOST = process.env.HOST;
